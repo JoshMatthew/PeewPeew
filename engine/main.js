@@ -1,20 +1,26 @@
+// SET UP CANVAS AND GAME CONTEXT
 const canv = document.getElementById('cnv')
 canv.width = window.visualViewport.width
 canv.height = window.visualViewport.height
 const ctx = canv.getContext('2d')
+// ================================
 
+// SET UP GLOBAL VARIABLES
 let bullets = []
 
 let enemies = []
-const enemyNum = 5
+const enemyNum = 11
 
 const player1 = new Player()
 
+// Populate enemy array
 for (let i = 0; i < enemyNum; i++) {
   let enemy = new Enemy()
   enemies.push(enemy)
 }
+// =================================
 
+// GLOBAL FUNCTIONS TO INITIALIZE GAME
 function setUp() {
   initializePlayer(player1)
   initializeBullets(bullets)
@@ -46,9 +52,11 @@ function start() {
   setUp()
 }
 
-/* ------ INITIALIZATIONS ------ */
+// =================================
 
-// PLAYER
+// INITIALIZATION FUNCTIONS FOR EACH GAME OBJECTS
+
+// Player
 function initializePlayer(player) {
   wall(player)
   player.draw()
@@ -57,7 +65,7 @@ function initializePlayer(player) {
   player.autoFiring()
 }
 
-// BULLETS
+// Bullets
 function initializeBullets(bullets) {
   bullets.forEach(blt => {
     let idx = bullets.indexOf(blt)
@@ -68,24 +76,27 @@ function initializeBullets(bullets) {
   })
 }
 
-// ENEMIES
+// Enemies
 function initializeEnemies(enemies) {
   enemies.forEach(enemy => {
     let idx = enemies.indexOf(enemy)
     wall(enemy)
     enemy.isDead(idx)
     enemy.follow(player1)
+    enemy.cutParticles()
     enemy.draw()
     enemy.move()
     for (let i = 0; i < enemies.length; i++) {
       if (i !== idx && enemy.isColliding(enemies[i])) {
-        enemy.moveAway(enemies[i])
+        // todo
       }
     }
-    enemy.drawParticle()
   })
 }
 
-/* ------ FUNCTION DECLARATIONS ------ */
+// =================================
+
+// FUNCTION DECLARATIONS TO START THE GAME
 drawWindow()
 setInterval(start, 1000 / 60)
+// =================================

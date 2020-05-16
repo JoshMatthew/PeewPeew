@@ -47,7 +47,7 @@ function dist(pos, target) {
 }
 
 function randomSize() {
-  let size = Math.random() * (20 - 15) + 15
+  let size = random(40, 15)
   return {
     w: size, h: size
   }
