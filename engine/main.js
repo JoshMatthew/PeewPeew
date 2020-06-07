@@ -49,10 +49,10 @@ function start() {
 }
 
 function stop(interval) {
-  let audiio = new Audio("./win-sound.mp3")
+  let audio = new Audio("engine/win-sound.mp3")
   console.log(audio)
-  audiio.volume = 0.6
-  audiio.play()
+  audio.volume = 0.6
+  audio.play()
 
   ctx.shadowColor = null
   ctx.shadowBlur = null
