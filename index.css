@@ -11,9 +11,13 @@ body {
   min-height: 100vh;
   justify-content: center;
   align-items: center;
-  /* background: #406279; */
+  background: #406279;
 }
 
-canvas {
-  cursor: crosshair;
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
 }

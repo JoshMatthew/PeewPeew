@@ -40,10 +40,29 @@ function multVector(v1, v2) {
   }
 }
 
+function multiplyVectors(v1, n) {
+  return {
+    dx: v1.dx * n,
+    dy: v1.dy * n
+  }
+}
+
+function divVector(vector, n) {
+  return {
+    dx: vector.dx / n,
+    dy: vector.dy / n
+  }
+}
+
+function subtractVectors(v1, v2, size) {
+  return {
+    dx: v2.x - (v1.x + size.w / 2),
+    dy: v2.y - (v1.y + size.h / 2)
+  }
+}
 function dist(pos, target) {
-  let computedX = Math.abs(pos.x - target.pos.x)
-  let computedY = Math.abs(pos.y - target.pos.y)
-  return { cx: computedX, cy: computedY }
+  let d = Math.abs(Math.sqrt(Math.pow((pos.x - target.pos.x), 2) + Math.pow((pos.y - target.pos.y), 2)))
+  return d
 }
 
 function randomSize() {
@@ -73,4 +92,19 @@ function randomMag() {
 
 function random(max, min = 1) {
   return Math.random() * (max - min) + min
+}
+
+function magnitude(vector) {
+  let mag = 0
+  let a = vector.dy
+  let b = vector.dx
+
+  mag = Math.abs(Math.sqrt((Math.pow(a, 2)) + (Math.pow(b, 2))))
+
+  return mag
+}
+
+function normalizeVector(vector) {
+  let mag = magnitude(vector)
+  return divVector(vector, mag)
 }

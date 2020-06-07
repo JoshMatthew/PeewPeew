@@ -14,6 +14,10 @@ function Particle(obj) {
 
   this.draw = function () {
     ctx.fillStyle = that.color
+    ctx.shadowColor = '#fff'
+    ctx.shadowBlur = 2
+    ctx.shadowOffsetX = 0
+    ctx.shadowOffsetY = 0
     ctx.fillRect(that.pos.x, that.pos.y, that.size.w, that.size.h)
     ctx.fill()
   }

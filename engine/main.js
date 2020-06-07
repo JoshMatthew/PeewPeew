@@ -6,11 +6,8 @@ const ctx = canv.getContext('2d')
 // ================================
 
 // SET UP GLOBAL VARIABLES
-let bullets = []
-
 let enemies = []
-const enemyNum = 11
-
+const enemyNum = 5
 const player1 = new Player()
 
 // Populate enemy array
@@ -23,7 +20,6 @@ for (let i = 0; i < enemyNum; i++) {
 // GLOBAL FUNCTIONS TO INITIALIZE GAME
 function setUp() {
   initializePlayer(player1)
-  initializeBullets(bullets)
   initializeEnemies(enemies)
 }
 
@@ -43,13 +39,29 @@ function wall(obj) {
 }
 
 function drawWindow() {
-  ctx.fillStyle = '#406279'
+  ctx.fillStyle = '#000'
   ctx.fillRect(0, 0, canv.width, canv.height)
 }
 
 function start() {
   drawWindow()
   setUp()
+}
+
+function stop(interval) {
+  let audiio = new Audio('../assets/sfx/win-sound.mp3')
+  console.log(audio)
+  audiio.volume = 0.6
+  audiio.play()
+
+  ctx.shadowColor = null
+  ctx.shadowBlur = null
+  ctx.fillStyle = '#fff'
+
+  ctx.font = "100px Arial";
+  ctx.fillText('YOU WIN', canv.width / 2 - 200, canv.height / 2);
+
+  clearInterval(interval)
 }
 
 // =================================
@@ -59,21 +71,11 @@ function start() {
 // Player
 function initializePlayer(player) {
   wall(player)
-  player.draw()
   player.drawParticle()
+  player.draw()
   player.move()
   player.autoFiring()
-}
-
-// Bullets
-function initializeBullets(bullets) {
-  bullets.forEach(blt => {
-    let idx = bullets.indexOf(blt)
-    blt.move()
-    blt.draw()
-    blt.enemyIsHit(idx, enemies)
-    blt.isOutOfBounds(bullets)
-  })
+  player.drawBullets(enemies)
 }
 
 // Enemies
@@ -85,10 +87,12 @@ function initializeEnemies(enemies) {
     enemy.follow(player1)
     enemy.cutParticles()
     enemy.draw()
+    enemy.drawBullets(player1)
     enemy.move()
     for (let i = 0; i < enemies.length; i++) {
       if (i !== idx && enemy.isColliding(enemies[i])) {
-        // todo
+        enemy.vector = newVector(0, 0)
+      } else {
       }
     }
   })
@@ -98,5 +102,7 @@ function initializeEnemies(enemies) {
 
 // FUNCTION DECLARATIONS TO START THE GAME
 drawWindow()
-setInterval(start, 1000 / 60)
+let interval = setInterval(() => {
+  enemies.length ? start() : stop(interval)
+}, 1000 / 60)
 // =================================
