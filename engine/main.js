@@ -49,7 +49,7 @@ function start() {
 }
 
 function stop(interval) {
-  let audiio = new Audio('../assets/sfx/win-sound.mp3')
+  let audiio = new Audio("./win-sound.mp3")
   console.log(audio)
   audiio.volume = 0.6
   audiio.play()

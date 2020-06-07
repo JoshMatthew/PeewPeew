@@ -72,7 +72,7 @@ function Enemy() {
     that.isHit = true
     that.showParticles() // when this enemy is hit, the particles are shown
 
-    let audio = new Audio('../assets/sfx/enemy-hit.mp3')
+    let audio = new Audio("./enemy-hit.mp3")
     audio.volume = 0.8
     audio.play()
   }
@@ -100,7 +100,7 @@ function Enemy() {
       blt.vector.dy = that.bulletDirection.dy // to the mouse pos
       that.bullets.push(blt) // Push the bullet object to bullets array
 
-      let audio = new Audio('../assets/sfx/enemy-gun.mp3')
+      let audio = new Audio("./enemy-gun.mp3")
       audio.volume = 0.3
       audio.play()
     }
