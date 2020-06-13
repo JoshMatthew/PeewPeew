@@ -15,6 +15,12 @@ function Player() {
   this.bulletDirection = {}
   this.bullets = []
 
+  // Volume and sound configuration
+  this.gunVolume = 0.350
+  this.hitVolume = 0.105
+  this.reloadVolume = 0.150
+
+
   this.mpos = newVector(0, 0) // The vector that points to the mouse
 
   this.positionHistory = [] // Array of particles of the player
@@ -62,7 +68,8 @@ function Player() {
     blt.vector.dy = that.bulletDirection.dy // to the mouse pos
     that.bullets.push(blt) // Push the bullet object to bullets array
 
-    let audio = new Audio('engine/player-gun.mp3')
+    let audio = new Audio('../assets/sfx/player-gun.mp3')
+    audio.volume = that.gunVolume
     audio.play()
   }
 
@@ -87,16 +94,14 @@ function Player() {
   // Life Manipulation
 
   this.hit = function (damage) {
-    // if (that.life <= 0) {
+    if (that.life > 0) {
+      that.life -= damage
 
-    // } else {
-    that.life -= damage
-
-    let audio = new Audio("engine/player-hit.mp3")
-    audio.volume = 0.3
-    audio.play()
+      let audio = new Audio("../assets/sfx/player-hit.mp3")
+      audio.volume = that.hitVolume
+      audio.play()
+    }
   }
-  // }
 
   // ================================
 
@@ -144,7 +149,8 @@ function Player() {
     const CHANGE_MODE = 81 // 81 is the keycode for 'q' key
 
     if (key === CHANGE_MODE) { // change the firing mode when 'q' key is pressed
-      let audio = new Audio("engine/reload.mp3")
+      let audio = new Audio("../assets/sfx/reload.mp3")
+      audio.volume = that.reloadVolume
       audio.play()
       that.autoFire = !that.autoFire
     }

@@ -9,6 +9,8 @@ const ctx = canv.getContext('2d')
 let enemies = []
 const enemyNum = 5
 const player1 = new Player()
+let winVolume = 0.310
+let looseVolume = 0.125
 
 // Populate enemy array
 for (let i = 0; i < enemyNum; i++) {
@@ -18,6 +20,23 @@ for (let i = 0; i < enemyNum; i++) {
 // =================================
 
 // GLOBAL FUNCTIONS TO INITIALIZE GAME
+
+// FUNCTION DECLARATIONS TO START THE GAME
+function playGame() {
+  drawWindow()
+  let interval = setInterval(() => {
+
+    if (!enemies.length) {
+      stop(interval)
+    } else if (player1.life <= 0) {
+      stopDead(interval)
+    } else {
+      start()
+    }
+
+  }, 1000 / 60)
+}
+
 function setUp() {
   initializePlayer(player1)
   initializeEnemies(enemies)
@@ -48,10 +67,9 @@ function start() {
   setUp()
 }
 
-function stop(interval) {
-  let audio = new Audio("engine/win-sound.mp3")
-  console.log(audio)
-  audio.volume = 0.6
+function stopDead(interval) {
+  let audio = new Audio("../assets/sfx/defeat-sound.mp3")
+  audio.volume = looseVolume
   audio.play()
 
   ctx.shadowColor = null
@@ -59,7 +77,25 @@ function stop(interval) {
   ctx.fillStyle = '#fff'
 
   ctx.font = "100px Arial";
-  ctx.fillText('YOU WIN', canv.width / 2 - 200, canv.height / 2);
+  ctx.textAlign = 'center'
+  ctx.fillText('YOU LOOSE', canv.width / 2, canv.height / 2);
+
+  clearInterval(interval)
+}
+
+function stop(interval) {
+  let audio = new Audio("../assets/sfx/win-sound.mp3")
+  audio.volume = winVolume
+  audio.play()
+
+  ctx.shadowColor = null
+  ctx.shadowBlur = null
+  ctx.fillStyle = '#fff'
+
+  ctx.font = "100px Arial";
+
+  ctx.textAlign = 'center'
+  ctx.fillText('YOU WIN', canv.width / 2, canv.height / 2);
 
   clearInterval(interval)
 }
@@ -97,12 +133,3 @@ function initializeEnemies(enemies) {
     }
   })
 }
-
-// =================================
-
-// FUNCTION DECLARATIONS TO START THE GAME
-drawWindow()
-let interval = setInterval(() => {
-  enemies.length ? start() : stop(interval)
-}, 1000 / 60)
-// =================================

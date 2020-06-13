@@ -24,6 +24,10 @@ function Enemy() {
   this.shooting = false
   this.bullets = []
 
+  // Volume and sound configuration
+  this.gunVolume = 0.110
+  this.hitVolume = 0.210
+
   // ================================
 
   // ENEMY METHODS
@@ -72,8 +76,8 @@ function Enemy() {
     that.isHit = true
     that.showParticles() // when this enemy is hit, the particles are shown
 
-    let audio = new Audio("engine/enemy-hit.mp3")
-    audio.volume = 0.8
+    let audio = new Audio("../assets/sfx/enemy-hit.mp3")
+    audio.volume = that.hitVolume
     audio.play()
   }
 
@@ -100,8 +104,8 @@ function Enemy() {
       blt.vector.dy = that.bulletDirection.dy // to the mouse pos
       that.bullets.push(blt) // Push the bullet object to bullets array
 
-      let audio = new Audio("engine/enemy-gun.mp3")
-      audio.volume = 0.3
+      let audio = new Audio("../assets/sfx/enemy-gun.mp3")
+      audio.volume = that.gunVolume
       audio.play()
     }
   }
