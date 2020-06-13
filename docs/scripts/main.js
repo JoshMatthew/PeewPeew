@@ -12,27 +12,35 @@ const player1 = new Player()
 let winVolume = 0.310
 let looseVolume = 0.125
 
-// Populate enemy array
-for (let i = 0; i < enemyNum; i++) {
-  let enemy = new Enemy()
-  enemies.push(enemy)
-}
 // =================================
 
 // GLOBAL FUNCTIONS TO INITIALIZE GAME
 
 // FUNCTION DECLARATIONS TO START THE GAME
+function fillEnemy(i) {
+  setTimeout(() => {
+    let enemy = new Enemy()
+    enemies.push(enemy)
+  }, 1000 * i)
+}
+
 function playGame() {
   drawWindow()
+  // Populate enemy array
+  for (let i = 0; i < enemyNum; i++) {
+    fillEnemy(i)
+  }
+
   let interval = setInterval(() => {
 
     if (!enemies.length) {
       stop(interval)
-    } else if (player1.life <= 0) {
-      stopDead(interval)
-    } else {
-      start()
-    }
+    } else
+      if (player1.life <= 0) {
+        stopDead(interval)
+      } else {
+        start()
+      }
 
   }, 1000 / 60)
 }
@@ -116,20 +124,18 @@ function initializePlayer(player) {
 
 // Enemies
 function initializeEnemies(enemies) {
-  enemies.forEach(enemy => {
-    let idx = enemies.indexOf(enemy)
-    wall(enemy)
-    enemy.isDead(idx)
-    enemy.follow(player1)
-    enemy.cutParticles()
-    enemy.draw()
-    enemy.drawBullets(player1)
-    enemy.move()
-    for (let i = 0; i < enemies.length; i++) {
-      if (i !== idx && enemy.isColliding(enemies[i])) {
-        enemy.vector = newVector(0, 0)
-      } else {
-      }
+
+  for (let i = 0; i < enemies.length; i++) {
+    wall(enemies[i])
+    enemies[i].isDead(i)
+    enemies[i].follow(player1)
+    enemies[i].cutParticles()
+    enemies[i].draw()
+    enemies[i].drawBullets(player1)
+    enemies[i].move()
+
+    for (let j = 0; j < enemies.length; j++) {
+      i !== j && enemies[i].isColliding(enemies[j])
     }
-  })
+  }
 }

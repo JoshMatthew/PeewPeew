@@ -5,10 +5,26 @@ function randomVector() {
   }
 }
 
-function randomPos() {
-  return {
-    x: Math.random() * (800 - 100) + 100,
-    y: Math.random() * (800 - 100) + 100
+function randomPos(player = null) {
+
+  if (player === null) {
+    return {
+      x: random(canv.width, 0),
+      y: random(canv.height, 0)
+    }
+  } else {
+    let x = random(canv.width, 0)
+    let y = random(canv.height, 100)
+
+    while (dist(newPos(x, y), player) < canv.width / 2) {
+      x = random(canv.width, 0)
+      y = random(canv.height, 0)
+    }
+
+    return {
+      x,
+      y
+    }
   }
 }
 

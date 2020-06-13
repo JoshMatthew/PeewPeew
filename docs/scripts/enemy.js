@@ -6,8 +6,8 @@ function Enemy() {
   // INITIALIZE ENEMY PROPERTIES
   this.size = randomSize()
   this.life = enemylifeGiver(this)
-  this.pos = randomPos()
-  this.vector = { dx: 0, dy: 0 } // Pretty weird property name but this vector here indicates the position of the player so it can follor it
+  this.pos = randomPos(player1)
+  this.vector = { dx: 0, dy: 0 } // Pretty weird property name but this vector here indicates the position of the player so it can follow it
   this.isHit = false // a boolean that varies if this enemy is freaking hit
 
   // Enemy color variations
@@ -123,7 +123,7 @@ function Enemy() {
   this.updateBulletDirection = function (player) {
     let playerPos = player.pos
     that.bulletDirection = subtractVectors(that.pos, playerPos, that.size) // saves the mouse position to mpos property
-    that.bulletDirection = multiplyVectors(normalizeVector(that.bulletDirection), 7) // normalizing the vector's magnitude to 1 then multiplying it to 15 to scale it up
+    that.bulletDirection = multiplyVectors(normalizeVector(that.bulletDirection), 9) // normalizing the vector's magnitude to 1 then multiplying it to 9 to scale it up
   }
 
   this.fireWeapon = function (player) {
@@ -139,11 +139,18 @@ function Enemy() {
 
   this.isColliding = function (obj) { // checks if this object is colliding to another enemy
     let d = dist(that.pos, obj)
-    return d < (obj.size.w * 1.5) ? true : false // returns true if the distance to other enemy is less than this enemy's width and height, false otherwise
+    if (d < (obj.size.w * 1.5)) {
+      that.stop()
+    }
+    // reverts the vector against the other enemy object to prevent them from stacking
+  }
+
+  this.notCollide = function () {
+
   }
 
   this.stop = function () {
-    that.vector = newVector(0, 0)
+    applyVector(that.pos, multiplyVectors(that.vector, -2))
   }
 
   this.follow = function (obj) { // sets this enemy's vector to the object's in this case the players position

@@ -5,7 +5,7 @@
 }
 
 body {
-  
+  position: relative;
 }
 
 .container {
@@ -19,7 +19,7 @@ body {
   background: #131414;
 }
 
-.menu {
+.menu, .options {
   background: #33333337;
   padding: 15px 20px;
   border-radius: 6px;
@@ -29,7 +29,7 @@ body {
   flex-direction: column;
 }
 
-.menu a {
+.menu a, .options a {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,10 +44,17 @@ body {
   text-transform: uppercase;
   letter-spacing: 2px;
   text-shadow: 0 0 7px #fff;
-  transition: box-shadow 100ms ease-in-out,  background 100ms ease-in-out;
+  transition: box-shadow 100ms ease-in-out,  background 100ms ease-in-out, display 500ms ease-in-out;
 }
 
-.menu a:hover {
+.options a {
+  font-size: 0.8rem;
+  margin: 0 0 1rem 0;
+  width: 11rem;
+  height: 2.4rem;
+}
+
+.menu a:hover, .options a:hover {
   cursor: pointer;
   box-shadow: 0 0 20px #77e4ff93;
 }
@@ -75,10 +82,50 @@ h1 {
   letter-spacing: 3px;
 }
 
+
+.options_opt {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #131414;
+  z-index: 10;
+  transition: display 500ms ease-in-out;
+}
+
+
 .show {
   display: block;
 }
 
 .hide {
   display: none;
+}
+
+.option {
+  padding: 12px;
+  margin: 0 0 3rem 0;
+}
+
+.option h4 {
+  margin-bottom: 0.65rem;
+  font-weight: 200;
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.option select, .option select option {
+  width: 9rem;
+  height: 2.5rem;
+  background-color: #111;
+  color: #fff;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
 }

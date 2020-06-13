@@ -187,7 +187,7 @@ function Player() {
 
   canv.addEventListener('mousemove', e => { // aim the gun according to mouse position
     that.updateBulletDirection(e)
-    that.bulletDirection = multiplyVectors(normalizeVector(that.bulletDirection), 7) // normalizing the vector's magnitude to 1 then multiplying it to 15 to scale it up
+    that.bulletDirection = multiplyVectors(normalizeVector(that.bulletDirection), 7) // normalizing the vector's magnitude to 1 then multiplying it to 7 to scale it up
 
     // this one is scaled to 15 since this one is used for bullet speed and the other one is for player's speed
   })
