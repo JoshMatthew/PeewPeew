@@ -1,126 +1,134 @@
-function randomVector() {
-  return {
-    dx: Math.random() * (5 - (-5)) + (-5),
-    dy: Math.random() * (5 - (-5)) + (-5)
-  }
-}
-
-function randomPos(player = null) {
-
-  if (player === null) {
+class HelperFunctions {
+  static randomVector() { // Returns random vector 
     return {
-      x: random(canv.width, 0),
-      y: random(canv.height, 0)
+      dx: this.random(5, -5),
+      dy: this.random(5, -5)
     }
-  } else {
-    let x = random(canv.width, 0)
-    let y = random(canv.height, 100)
+  }
 
-    while (dist(newPos(x, y), player) < canv.width / 2) {
-      x = random(canv.width, 0)
-      y = random(canv.height, 0)
+  static randomPos(player = null) { // Returns random position
+
+    if (player === null) { // If player is null, it means the one requesting this function call is the player
+      return {
+        x: this.random(canv.width, 0),
+        y: this.random(canv.height, 0)
+      }
+    } else {
+      let x = this.random(canv.width, 0)
+      let y = this.random(canv.height, 100)
+
+      while (this.dist(this.newPos(x, y), player) < canv.width / 2) { // This loop prevents the enemy from spawning near the player
+        x = this.random(canv.width, 0)
+        y = this.random(canv.height, 0)
+      }
+
+      return {
+        x,
+        y
+      }
     }
+  }
 
+  static applyVector(pos, vector) { // Apply the vector to the current position of an object
+    pos.x += vector.dx
+    pos.y += vector.dy
+  }
+
+  static getMousePos(e) { // Gets the mouse position inside the canvas
+    const rect = canv.getBoundingClientRect()
     return {
-      x,
-      y
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
     }
   }
-}
 
-function applyVector(pos, vector) {
-  pos.x += vector.dx
-  pos.y += vector.dy
-}
-
-function getMousePos(e) {
-  const rect = canv.getBoundingClientRect()
-  return {
-    x: e.clientX - rect.left,
-    y: e.clientY - rect.top
+  static newVector(dx, dy) { // Returns new vector object
+    return { dx, dy }
   }
-}
 
-function newVector(dx, dy) {
-  return { dx, dy }
-}
-
-function newPos(x, y) {
-  return { x, y }
-}
-
-function multVector(v1, v2) {
-  return {
-    dx: v1.dx *= v2.dx,
-    dy: v1.dy *= v2.dy
+  static newPos(x, y) { // Returns new position object
+    return { x, y }
   }
-}
 
-function multiplyVectors(v1, n) {
-  return {
-    dx: v1.dx * n,
-    dy: v1.dy * n
+  static multVector(v1, v2) { // Multiplies 2 vectorsb and return it
+    return {
+      dx: v1.dx *= v2.dx,
+      dy: v1.dy *= v2.dy
+    }
   }
-}
 
-function divVector(vector, n) {
-  return {
-    dx: vector.dx / n,
-    dy: vector.dy / n
+  static multiplyVectors(v1, n) { // Multiplies vector to a number and return it
+    return {
+      dx: v1.dx * n,
+      dy: v1.dy * n
+    }
   }
-}
 
-function subtractVectors(v1, v2, size) {
-  return {
-    dx: v2.x - (v1.x + size.w / 2),
-    dy: v2.y - (v1.y + size.h / 2)
+  static divVector(vector, n) { // Divides vector to a number and return it
+    return {
+      dx: vector.dx / n,
+      dy: vector.dy / n
+    }
   }
-}
-function dist(pos, target) {
-  let d = Math.abs(Math.sqrt(Math.pow((pos.x - target.pos.x), 2) + Math.pow((pos.y - target.pos.y), 2)))
-  return d
-}
 
-function randomSize() {
-  let size = random(40, 15)
-  return {
-    w: size, h: size
+  static subtractVectors(v1, v2, size) {  // Subtract 2 vectors with the size and return it
+    return {
+      dx: v2.x - (v1.x + size.w / 2),
+      dy: v2.y - (v1.y + size.h / 2)
+    }
   }
-}
 
-function enemylifeGiver(obj) {
-  if (obj.size.w > 0 && obj.size.w < 21) {
-    return 100
-  } else if (obj.size.w >= 21 && obj.size.w < 30) {
-    return 150
-  } else if (obj.size.w >= 30 && obj.size.w <= 40) {
-    return 220
+  static dist(pos, target) { // Computes the distance from another object 
+    let d = Math.abs(Math.sqrt(Math.pow((pos.x - target.pos.x), 2) + Math.pow((pos.y - target.pos.y), 2)))
+    return d
   }
-}
 
-function randomTime() {
-  return Math.random() * (2000 - 1500) + 1500
-}
+  static randomSize() { // Generates random size and return it
+    let size = this.random(40, 15)
+    return {
+      w: size, h: size
+    }
+  }
 
-function randomMag() {
-  return Math.random() * (0.01 - 0.0007) + 0.0007
-}
+  static enemylifeGiver(obj) { // Dynamic life giver for enemy that varies to its size
+    if (obj.size.w > 0 && obj.size.w < 21) {
+      return 100
+    } else if (obj.size.w >= 21 && obj.size.w < 30) {
+      return 150
+    } else if (obj.size.w >= 30 && obj.size.w <= 40) {
+      return 220
+    }
+  }
 
-function random(max, min = 1) {
-  return Math.random() * (max - min) + min
-}
+  static randomTime() { // Returns random time
+    return this.random(2000, 1500)
+  }
 
-function magnitude(vector) {
-  let mag = 0
-  let a = vector.dy
-  let b = vector.dx
+  static randomMag() { // Reuturns random magnitude
+    return this.random(0.01, 0.0007)
+  }
 
-  mag = Math.abs(Math.sqrt((Math.pow(a, 2)) + (Math.pow(b, 2))))
+  static random(max, min = 1) { // Reuturns random number. Parameters can have max and min. If there's only one argument, the default min is going to be 1
+    return Math.random() * (max - min) + min
+  }
 
-  return mag
-}
+  static magnitude(vector) { // Computes the magnitude of a vector and returns it
+    let mag = 0
+    let a = vector.dy
+    let b = vector.dx
 
-function normalizeVector(vector) {
-  let mag = magnitude(vector)
-  return divVector(vector, mag)
+    mag = Math.abs(Math.sqrt((Math.pow(a, 2)) + (Math.pow(b, 2))))
+
+    return mag
+  }
+
+  static normalizeVector(vector) { // Normalize the vector or shrinks its value to 1
+    let mag = this.magnitude(vector)
+    return this.divVector(vector, mag)
+  }
+
+  static listenEvent(from, event, handler) { // A helper function for making an event listener
+    return from.addEventListener(event, handler)
+  }
+
 }

@@ -1,47 +1,55 @@
-function Bullet() {
-  this.size = { w: 4, h: 4 }
-  this.pos = newPos(0, 0)
-  this.vector = newVector(5, 5)
-  this.contact = false
-  this.damage = 25
-  this.color = '#fff'
-
-  let that = this
-
-  this.enemyIsHit = function (idx, enemies, enemyBullets) {
-    enemies.forEach(enemy => {
-      this.isHit(enemy)
-      if (this.contact) {
-        this.bulletDissolve(idx, enemyBullets)
-        enemy.hit(that.damage)
-      }
-    })
+class Bullet {
+  constructor() {
+    // Global Variables
+    this.size = { w: 3, h: 3 } // Defines the size of the bullet
+    this.vector = {} // Bullet speed that varies on the host object
+    this.contact = false // A boolean used to check if the bullet is in contact with some object
+    this.damage = 25 // the default damage of bullet
+    this.color = '#fff' // The default color of the bullet
+    this.pos = HelperFunctions.newPos(0, 0) // The position of the bullet is initially set to 0, 0 but eventually will adapt the position of its host object
   }
 
-  this.playerIsHit = function (idx, player, playerBullets) {
-    this.isHit(player)
+  isHitHelperFunc(i, object, bullets) { // A helper function to determine if an object is hit or not
+    this.isHit(object) // Change the contact property is the bullet gets contact with an entity
     if (this.contact) {
-      this.bulletDissolve(idx, playerBullets)
-      player.hit(that.damage)
+      this.bulletDissolve(i, bullets)
+      object.hit(this.damage)
     }
   }
 
-  this.isHit = function (enemy) {
-    let d = dist(this.pos, enemy)
-    this.contact = d < enemy.size.w ? true : false
+  entityIsHit(i, object, bullets) { // The main function for determining a hit or not
+    let type = object.constructor.name // Gets the name of the class. Returns 'Player' if the object is an instance of the Player class and returns 'Array' if the object is an array
+
+    switch (type) {
+      case 'Player':
+        this.isHitHelperFunc(i, object, bullets)
+        break
+      case 'Array':
+        object.forEach(enemy => {
+          this.isHitHelperFunc(i, enemy, bullets)
+        })
+        break
+      default:
+        break
+    }
   }
 
-  this.move = function () {
-    applyVector(this.pos, this.vector)
+  isHit(object) { // Alters the contact property if an entity is hit
+    let d = HelperFunctions.dist(this.pos, object)
+    this.contact = d < object.size.w ? true : false
   }
 
-  this.bulletDissolve = function (idx, bullets) {
+  move() { // Moves the bullet
+    HelperFunctions.applyVector(this.pos, this.vector)
+  }
+
+  bulletDissolve(idx, bullets) { // Dissolves the bullet when there's a contact
     if (this.contact) {
       bullets.splice(idx, 1)
     }
   }
 
-  this.isOutOfBounds = function (bullets) {
+  isOutOfBounds(bullets) { // Also removes the bullet from the bullet array when the bullet goes off the screen
     const oobLEFT = this.pos.x + this.size.w < 0
     const oobTOP = this.pos.y + this.size.h < 0
     const oobRIGHT = this.pos.x + this.size.w > canv.width
@@ -52,9 +60,9 @@ function Bullet() {
     }
   }
 
-  this.draw = function () {
-    ctx.fillStyle = that.color
-    ctx.shadowColor = that.color
+  draw() { // Shows the bullet on the screen
+    ctx.fillStyle = this.color
+    ctx.shadowColor = this.color
     ctx.shadowBlur = 6
     ctx.shadowOffsetX = 0
     ctx.shadowOffsetY = 0

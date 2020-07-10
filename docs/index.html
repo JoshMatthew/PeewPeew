@@ -11,14 +11,41 @@
 <body>
   <div class="container">
     <h1>PeewPeew</h1>
+    <!-- MENU SECTION -->
     <div class="menu">
       <a id="start-btn" type="button">Start</a>
-      <a id="options-btn" type="button">Options</a>
+      <a id="options-btn" type="button">Settings</a>
       <a id="about-btn" type="button">About</a>
 
-      <p id="version">PeewPeew v1.0.0</p>
+      <p id="version">PeewPeew v1.0.1</p>
+    </div>
+    <!-- ------------------ -->
+
+
+    <!-- ABOUT SECTION -->
+    <div class="about hide">
+      <p><span id="about-start">Peewpeew</span> is a 2D single player shooter game. It is in its early development so
+        you might
+        experience some bugs. The highest score is the winner,
+        that's the main goal of this game for now.
+        It doesn't have various gamemodes and levels. I will continue to add features to this web game so it
+        can be more fun and have a good user experience.
+      </p>
+
+      <h5>Controls</h5>
+      <p><span class="controls-text">Move</span> : <span class="mode-specifier">(WASD controls)</span> [W = UP] [A =
+        RIGHT] [S = DOWN] [D = LEFT] / <span class="mode-specifier">(MOUSE controls)</span> LMB</p>
+      <p><span class="controls-text">Shoot</span> : <span class="mode-specifier">(WASD controls)</span> LMB / <span
+          class="mode-specifier">(MOUSE controls)</span> SPACE</p>
+      <p><span class="controls-text">Reload</span> : R</p>
+      <p><span class="controls-text">Change Firing Mode</span> : Q</p>
+      <a id="backAbout" type="button">Back</a>
     </div>
 
+    <!-- -------------------- -->
+
+
+    <!-- SETTINGS SECTION -->
     <div class="options hide">
       <div class="option">
         <h4>Controls</h4>
@@ -31,17 +58,51 @@
       <a id="back" type="button">Back</a>
       <a id="save" type="button">Save Changes</a>
     </div>
+    <!-- ---------------------- -->
   </div>
+
+  <!-- THE MAJESTIC CANVAS -->
   <canvas id="cnv" class="show hide"></canvas>
+  <!-- --------------------------- -->
+
+
+  <!-- RESTART MODAL SECTION -->
+  <div class="restart-modal hide">
+    <div class="details">
+      <a id="restart-btn" type="button">Restart</a>
+      <a id="exit-btn" type="button">Quit to Menu</a>
+
+      <h2 id="score"></h2>
+    </div>
+  </div>
+  <!-- --------------------------- -->
+
+  <!-- GAME DETAILS SECTION -->
+  <div class="game-details hide">
+    <div><span id="life-cntnr">
+        <h2>Life: </h2>
+      </span><span id="life"></span></div>
+    <div><span id="ammo-cntnr">
+        <h2>Ammo: </h2>
+      </span><span id="ammo"></span></div>
+    <div><span id="clips-cntnr">
+        <h2>Clips: </h2>
+      </span><span id="clips"></span></div>
+  </div>
+  <!-- ------------------------ -->
+
   <!-- SCRIPTS -->
-  <script src="./scripts/actions.js"></script>
+  <script src="./scripts/helper_functions.js"></script>
   <script src="./scripts/particle.js"></script>
   <script src="./scripts/Gun.js"></script>
   <script src="./scripts/enemy.js"></script>
   <script src="./scripts/player.js"></script>
+  <script src="./scripts/Spawner.js"></script>
+  <script src="./scripts/perks/Clip.js"></script>
+  <script src="./scripts/perks/Speed.js"></script>
   <script src="./scripts/bullet.js"></script>
-  <script src="./scripts/helper_functions.js"></script>
   <script src="./scripts/main.js"></script>
+  <script src="./scripts/actions.js"></script>
 </body>
 
 </html>

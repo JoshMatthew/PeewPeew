@@ -1,32 +1,34 @@
-function Enemy() {
-  // Global variables
-  const that = this // This is weird, but the 'that' constant represents the object's 'this' so it can be accessible in inner scopes
-  const bloodNumber = 5 // number of blood particles (keep it low so it is not too graphic)
+class Enemy {
+  constructor(player) {
+    // Global variables
+    this.bloodNumber = 5 // number of blood particles (keep it low so it is not too graphic)
 
-  // INITIALIZE ENEMY PROPERTIES
-  this.size = randomSize()
-  this.life = enemylifeGiver(this)
-  this.pos = randomPos(player1)
-  this.vector = { dx: 0, dy: 0 } // Pretty weird property name but this vector here indicates the position of the player so it can follow it
-  this.isHit = false // a boolean that varies if this enemy is freaking hit
+    // INITIALIZE ENEMY PROPERTIES
+    this.size = HelperFunctions.randomSize()
+    this.life = HelperFunctions.enemylifeGiver(this)
+    this.pos = HelperFunctions.randomPos(player)
+    this.vector = { dx: 0, dy: 0 } // Pretty weird property name but this vector here indicates the position of the player so it can follow it
+    this.isHit = false // a boolean that varies if this enemy is freaking hit
 
-  // Enemy color variations
-  this.defaultColor = '#00ff10'
-  this.hitColor = '#ff100050' // the color when this enemy is hit
-  this.color = this.defaultColor
+    // Enemy color variations
+    this.defaultColor = '#00ff10'
+    this.hitColor = '#ff100050' // the color when this enemy is hit
+    this.color = this.defaultColor
 
-  // Enemy particles initial properties
-  this.particles = []
-  this.particlePos = newPos(this.pos.x, this.pos.y)
-  that.bulletDirection = {}
+    // Enemy particles initial properties
+    this.particles = []
+    this.particlePos = HelperFunctions.newPos(this.pos.x, this.pos.y)
+    this.bulletDirection = {}
 
-  // Enemy shooting mechanism
-  this.shooting = false
-  this.bullets = []
+    // Enemy shooting mechanism
+    this.shooting = false
+    this.bullets = []
+    this.bulletDamage = 10
 
-  // Volume and sound configuration
-  this.gunVolume = 0.110
-  this.hitVolume = 0.210
+    // Volume and sound configuration
+    this.gunVolume = 0.110
+    this.hitVolume = 0.210
+  }
 
   // ================================
 
@@ -34,35 +36,35 @@ function Enemy() {
 
   // Particle methods
 
-  this.fillParticles = function () {
-    for (let i = 0; i < bloodNumber; i++) {
+  fillParticles() {
+    for (let i = 0; i < this.bloodNumber; i++) {
       let bloodParticle = new Particle(this) // creates a new particle object
       bloodParticle.color = '#00ff1050'
-      bloodParticle.vector = newVector(random(random(2, -2), random(3, -3)), random(random(3, -3), random(2, -2))) // creates a random vector for this specific particle (more randomness more aesthetics)
-      that.particles.push(bloodParticle)
+      bloodParticle.vector = HelperFunctions.newVector(HelperFunctions.random(HelperFunctions.random(2, -2), HelperFunctions.random(3, -3)), HelperFunctions.random(HelperFunctions.random(3, -3), HelperFunctions.random(2, -2))) // creates a random vector for this specific particle (more randomness more aesthetics)
+      this.particles.push(bloodParticle)
     }
   }
 
-  this.cutParticles = function () { // to keep optimization, this keeps the particle array neat and few
-    if (that.particles.length > bloodNumber) {
-      that.particles.splice(0, 1)
+  cutParticles() { // to keep optimization, this keeps the particle array neat and few
+    if (this.particles.length > this.bloodNumber) {
+      this.particles.splice(0, 1)
     }
   }
 
-  this.showParticles = function () { // a wrapper method to show the particles to the canvas
-    that.updateParticlePos()
+  showParticles() { // a wrapper method to show the particles to the canvas
+    this.updateParticlePos()
     this.fillParticles()
   }
 
-  this.updateParticlePos = function () { // updates the particle's position to the current position of the player
-    that.particlePos.x = that.pos.x + (that.size.w / 2) // what's happening here? just centering
-    that.particlePos.y = that.pos.y + (that.size.h / 2)
+  updateParticlePos() { // updates the particle's position to the current position of the player
+    this.particlePos.x = this.pos.x + (this.size.w / 2) // what's happening here? just centering
+    this.particlePos.y = this.pos.y + (this.size.h / 2)
   }
 
-  this.runParticles = function () { // The particles don't want to just sit down, they wanna run.
-    for (let i = 0; i < that.particles.length; i++) {
-      that.particles[i].draw()
-      that.particles[i].move()
+  runParticles() { // The particles don't want to just sit down, they wanna run.
+    for (let i = 0; i < this.particles.length; i++) {
+      this.particles[i].draw()
+      this.particles[i].move()
     }
   }
 
@@ -70,20 +72,20 @@ function Enemy() {
 
   // Enemy life manipulation methods (don't look at me)
 
-  this.hit = function (damage) {
-    that.color = that.hitColor
-    that.life -= damage
-    that.isHit = true
-    that.showParticles() // when this enemy is hit, the particles are shown
+  hit(damage) {
+    this.color = this.hitColor
+    this.life -= damage
+    this.isHit = true
+    this.showParticles() // when this enemy is hit, the particles are shown
 
     let audio = new Audio("../assets/sfx/enemy-hit.mp3")
-    audio.volume = that.hitVolume
+    audio.volume = this.hitVolume
     audio.play()
   }
 
-  this.isDead = function (idx) { // deletes this enemy into existence when dead ( not really it just got recycled into the memory)
-    if (that.life <= 0) {
-      enemies.splice(idx, 1)
+  isDead(i) { // deletes this enemy into existence when dead ( not really it just got recycled into the memory)
+    if (this.life <= 0) {
+      enemies.splice(i, 1)
     }
   }
 
@@ -91,45 +93,45 @@ function Enemy() {
 
   // Enemy shooting mechanism
 
-  this.createBullets = function () {
+  createBullets() {
 
-    if (that.bullets.length < 2) {
+    if (this.bullets.length < 2) {
       let blt = new Bullet()
-      blt.pos.x = that.pos.x + (that.size.w / 2) // Centers the bullet starting point
-      blt.pos.y = that.pos.y + (that.size.h / 2) // to the players body
+      blt.pos.x = this.pos.x + (this.size.w / 2) // Centers the bullet starting point
+      blt.pos.y = this.pos.y + (this.size.h / 2) // to the players body
       blt.color = '#00ff00'
-      blt.damage = 10
+      blt.damage = this.bulletDamage
 
-      blt.vector.dx = that.bulletDirection.dx // Sets the vector of the bullet 
-      blt.vector.dy = that.bulletDirection.dy // to the mouse pos
-      that.bullets.push(blt) // Push the bullet object to bullets array
+      blt.vector.dx = this.bulletDirection.dx // Sets the vector of the bullet 
+      blt.vector.dy = this.bulletDirection.dy // to the mouse pos
+      this.bullets.push(blt) // Push the bullet object to bullets array
 
       let audio = new Audio("../assets/sfx/enemy-gun.mp3")
-      audio.volume = that.gunVolume
+      audio.volume = this.gunVolume
       audio.play()
     }
   }
 
-  this.drawBullets = function (player) {
-    that.bullets.forEach(blt => {
-      let idx = that.bullets.indexOf(blt)
+  drawBullets(player) {
+    this.bullets.forEach(blt => {
+      let idx = this.bullets.indexOf(blt)
       blt.move()
       blt.draw()
-      blt.playerIsHit(idx, player, that.bullets)
-      blt.isOutOfBounds(that.bullets)
+      blt.entityIsHit(idx, player, this.bullets)
+      blt.isOutOfBounds(this.bullets)
     })
   }
 
-  this.updateBulletDirection = function (player) {
+  updateBulletDirection(player) {
     let playerPos = player.pos
-    that.bulletDirection = subtractVectors(that.pos, playerPos, that.size) // saves the mouse position to mpos property
-    that.bulletDirection = multiplyVectors(normalizeVector(that.bulletDirection), 9) // normalizing the vector's magnitude to 1 then multiplying it to 9 to scale it up
+    this.bulletDirection = HelperFunctions.subtractVectors(this.pos, playerPos, this.size) // saves the mouse position to mpos property
+    this.bulletDirection = HelperFunctions.multiplyVectors(HelperFunctions.normalizeVector(this.bulletDirection), 9) // normalizing the vector's magnitude to 1 then multiplying it to 9 to scale it up
   }
 
-  this.fireWeapon = function (player) {
-    let d = dist(that.pos, player)
-    if (d < that.size.w * 14) {
-      return that.shooting = !that.shooting
+  fireWeapon(player) {
+    let d = HelperFunctions.dist(this.pos, player)
+    if (d < this.size.w * 14) {
+      return this.shooting = !this.shooting
     }
   }
 
@@ -137,55 +139,59 @@ function Enemy() {
 
   // Enemy movements methods
 
-  this.isColliding = function (obj) { // checks if this object is colliding to another enemy
-    let d = dist(that.pos, obj)
-    if (d < (obj.size.w * 1.5)) {
-      that.stop()
+  isColliding(obj) { // checks if this object is colliding to another enemy
+    // Nothing crazy here, just stoping when this object is near to another Enemy or to the Player
+    let d = HelperFunctions.dist(this.pos, obj)
+    if (obj.constructor.name === 'Player') {
+      if (d < (obj.size.w * 5)) {
+        this.stop()
+      }
+    } else if (obj.constructor.name === 'Enemy') {
+      if (d < (obj.size.w * 1.5)) {
+        this.stop()
+      }
     }
-    // reverts the vector against the other enemy object to prevent them from stacking
   }
 
-  this.notCollide = function () {
-
+  stop() { // reverts the vector against the other enemy object to prevent them from stacking
+    HelperFunctions.applyVector(this.pos, HelperFunctions.multiplyVectors(this.vector, -2))
   }
 
-  this.stop = function () {
-    applyVector(that.pos, multiplyVectors(that.vector, -2))
-  }
-
-  this.follow = function (obj) { // sets this enemy's vector to the object's in this case the players position
-    if (that.fireWeapon(obj)) {
-      that.createBullets()
+  follow(obj) { // sets this enemy's vector to the object's in this case the players position
+    if (this.fireWeapon(obj)) {
+      this.createBullets()
     }
-    that.updateBulletDirection(obj)
-    that.vector = subtractVectors(that.pos, obj.pos, that.size)
-    that.vector = normalizeVector(that.vector) // shrinks the vector's magnitude to 1
+    this.updateBulletDirection(obj)
+    this.vector = HelperFunctions.subtractVectors(this.pos, obj.pos, this.size)
+    this.vector = HelperFunctions.normalizeVector(this.vector) // shrinks the vector's magnitude to 1
   }
 
-  this.move = function () {
-    if (that.isHit) {
+  move() {
+    if (this.isHit) {
       setTimeout(() => {
-        that.isHit = false // sets the state of isHit variable after 1.5 seconds
+        this.isHit = false // sets the state of isHit variable after 1.5 seconds
       }, 1500)
-      that.runParticles() // runs or moves the particles if its hit
+      this.runParticles() // runs or moves the particles if its hit
     }
-    applyVector(that.pos, that.vector) // moves the enemy according to its vector
+    HelperFunctions.applyVector(this.pos, this.vector) // moves the enemy according to its vector
   }
 
   // =================================
 
   // Enemy wants to show to the canvas methods 
-  this.draw = function () {
-    ctx.fillStyle = that.color
-    ctx.shadowColor = that.color
+  draw() {
+    ctx.fillStyle = this.color
+    ctx.shadowColor = this.color
     ctx.shadowBlur = 30
-    ctx.fillRect(that.pos.x, that.pos.y, that.size.w, that.size.h)
+    ctx.fillRect(this.pos.x, this.pos.y, this.size.w, this.size.h)
 
-    if (that.color === that.hitColor) {
+    if (this.color === this.hitColor) {
       setTimeout(() => {
-        that.color = that.defaultColor // sets the color of the enemy to normal after 100 ms
+        this.color = this.defaultColor // sets the color of the enemy to normal after 100 ms
       }, 100)
     }
+
+    ctx.closePath()
   }
 
   // =================================

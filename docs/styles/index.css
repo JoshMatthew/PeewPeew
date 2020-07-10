@@ -19,7 +19,7 @@ body {
   background: #131414;
 }
 
-.menu, .options {
+.menu, .options, .about {
   background: #33333337;
   padding: 15px 20px;
   border-radius: 6px;
@@ -29,7 +29,51 @@ body {
   flex-direction: column;
 }
 
-.menu a, .options a {
+.about {
+  align-items: flex-start;
+  width: 40%;
+}
+
+.about .controls-text {
+  color: #4e8ca5;
+  text-shadow: 0 0 3px #4e8ca5;
+}
+
+.about p {
+  font-size: 0.8rem;
+  color: #fff;
+  letter-spacing: 2px;
+  /* text-transform: uppercase; */
+  text-shadow: 0 0 3px #fff;
+  font-weight: 200;
+  line-height: 2rem;
+  font-family: sans-serif;
+}
+
+.about #about-start{
+  color: #73ff00;
+  text-shadow: 0 0 3px #73ff00;
+  font-size: 1.4rem;
+}
+
+.about .mode-specifier {
+  color: #4d4f6b;
+  text-shadow: 0 0 3px #4d4f6b;
+}
+
+.about h5 {
+  margin-top: 3rem;
+  margin-right: auto;
+  color: #ff002b;
+  letter-spacing: 2px;
+  /* text-transform: uppercase; */
+  text-shadow: 0 0 3px #ff002b;
+  font-weight: 200;
+  line-height: 2rem;
+  font-family: sans-serif;
+}
+
+.menu a, .options a, .about a, .restart-modal a {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,6 +91,23 @@ body {
   transition: box-shadow 100ms ease-in-out,  background 100ms ease-in-out, display 500ms ease-in-out;
 }
 
+.about a {
+  margin: 2rem 0 0 0;
+}
+
+.restart-modal a {
+ width: 10rem;
+}
+
+.restart-modal h2 {
+  font-size: 1.9rem;
+  margin-top: 1rem;
+  color: #fff;
+  text-shadow: 0 0 7px #fff;
+  text-transform: uppercase;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .options a {
   font-size: 0.8rem;
   margin: 0 0 1rem 0;
@@ -54,12 +115,16 @@ body {
   height: 2.4rem;
 }
 
-.menu a:hover, .options a:hover {
+.menu a:hover, .options a:hover, .about a:hover, .restart-modal a:hover {
   cursor: pointer;
   box-shadow: 0 0 20px #77e4ff93;
 }
 
-.menu a:active {
+.restart-modal a:hover {
+  box-shadow: 0 0 20px #ffffff;
+}
+
+.menu a:active, .restart-modal a:active {
   cursor: pointer;
   background-color: #222;
   box-shadow: none;
@@ -98,11 +163,16 @@ h1 {
 
 
 .show {
+  visibility: visible;
   display: block;
 }
 
 .hide {
+  visibility: hidden;
   display: none;
+  position: unset;
+  width: 0;
+  height: 0;
 }
 
 .option {
@@ -128,4 +198,62 @@ h1 {
   padding: 5px;
   border: none;
   border-radius: 5px;
+}
+
+.restart-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #00000086;
+  z-index: 12;
+}
+
+.details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: none;
+  padding: 15px 20px;
+  width: 30%;
+  border-radius: 10px;
+}
+
+.game-details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 2rem;
+}
+
+.game-details div {
+  display: flex;
+  align-items: center;
+}
+
+.game-details div span {
+  margin-left: 0.4rem;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.2rem;
+}
+
+#life-cntnr, #ammo-cntnr, #clips-cntnr {
+  font-size: 0.8rem;
+}
+
+#life-cntnr {
+  color: #ff002b;
+  font-size: 1.3rem;
+}
+
+#ammo-cntnr, #clips-cntnr {
+  color: #c8ff00;
 }
