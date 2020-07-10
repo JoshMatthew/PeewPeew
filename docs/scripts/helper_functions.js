@@ -134,6 +134,7 @@ class HelperFunctions {
   static playAudio(volume, resource) {
     let newAudio = new Audio(resource)
     newAudio.volume = volume
+    newAudio.crossOrigin = 'anonymous'
     let playPromise = newAudio.play()
 
     if (playPromise !== undefined) {
