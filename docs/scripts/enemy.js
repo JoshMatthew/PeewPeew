@@ -78,7 +78,7 @@ class Enemy {
     this.isHit = true
     this.showParticles() // when this enemy is hit, the particles are shown
 
-    HelperFunctions.playAudio(this.hitVolume, "../assets/sfx/enemy-hit.mp3")
+    HelperFunctions.playAudio(this.hitVolume, "https://raw.githubusercontent.com/JoshMatthew/PeewPeew/master/assets/sfx/enemy-hit.mp3")
   }
 
   isDead(i) { // deletes this enemy into existence when dead ( not really it just got recycled into the memory)
@@ -104,7 +104,7 @@ class Enemy {
       blt.vector.dy = this.bulletDirection.dy // to the mouse pos
       this.bullets.push(blt) // Push the bullet object to bullets array
 
-      HelperFunctions.playAudio(this.gunVolume, "../assets/sfx/enemy-gun.mp3")
+      HelperFunctions.playAudio(this.gunVolume, "https://raw.githubusercontent.com/JoshMatthew/PeewPeew/master/assets/sfx/enemy-gun.mp3")
     }
   }
 

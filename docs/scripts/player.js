@@ -91,11 +91,11 @@ class Player {
         blt.vector.dy = this.bulletDirection.dy // to the mouse pos
         this.bullets.push(blt) // Push the bullet object to bullets array
 
-        HelperFunctions.playAudio(this.gunVolume, '../assets/sfx/player-gun.mp3')
+        HelperFunctions.playAudio(this.gunVolume, 'https://raw.githubusercontent.com/JoshMatthew/PeewPeew/master/assets/sfx/player-gun.mp3')
 
         this.ammo--
       } else {
-        HelperFunctions.playAudio(this.noAmmoVolume, '../assets/sfx/no-ammo.mp3')
+        HelperFunctions.playAudio(this.noAmmoVolume, 'https://raw.githubusercontent.com/JoshMatthew/PeewPeew/master/assets/sfx/no-ammo.mp3')
       }
     }
   }
@@ -124,7 +124,7 @@ class Player {
     if (this.life > 0) {
       this.life -= damage
 
-      HelperFunctions.playAudio(this.hitVolume, "../assets/sfx/player-hit.mp3")
+      HelperFunctions.playAudio(this.hitVolume, "https://raw.githubusercontent.com/JoshMatthew/PeewPeew/master/assets/sfx/player-hit.mp3")
     }
   }
 
@@ -209,7 +209,7 @@ class Player {
       const RELOAD = 82 // 82 is the keycode for 'r' key
 
       if (key === CHANGE_MODE) { // change the firing mode when 'q' key is pressed
-        HelperFunctions.playAudio(this.reloadVolume, "../assets/sfx/reload.mp3")
+        HelperFunctions.playAudio(this.reloadVolume, "https://raw.githubusercontent.com/JoshMatthew/PeewPeew/master/assets/sfx/reload.mp3")
         this.autoFire = !this.autoFire
       }
 
@@ -217,7 +217,7 @@ class Player {
         if (!this.reloading) {
           if (this.clips > 0) {
             if (this.ammo !== this.AMMO_SIZE) {
-              HelperFunctions.playAudio(this.reloadGunVolume, "../assets/sfx/reload-gun.mp3")
+              HelperFunctions.playAudio(this.reloadGunVolume, "https://raw.githubusercontent.com/JoshMatthew/PeewPeew/master/assets/sfx/reload-gun.mp3")
 
               setTimeout(() => {
                 this.reloading = !this.reloading

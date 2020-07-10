@@ -100,8 +100,7 @@ function stopDead(interval) { // Function that stops the game when the player di
   calculateTime() // Calculates the overall time the player spent during his game
   showScore() // Shows the score
   gameOnToggler() // Turns off the game
-
-  HelperFunctions.playAudio(looseVolume, "../assets/sfx/defeat-sound.mp3")
+  HelperFunctions.playAudio(looseVolume, "https://raw.githubusercontent.com/JoshMatthew/PeewPeew/master/assets/sfx/defeat-sound.mp3")
 
   ctx.shadowColor = null
   ctx.shadowBlur = null
@@ -121,7 +120,7 @@ function stopWin(interval) { // Function that stops the game when the player win
   showScore() // Shows the score
   gameOnToggler() // Turns off the game
 
-  HelperFunctions.playAudio(winVolume, "../assets/sfx/win-sound.mp3")
+  HelperFunctions.playAudio(winVolume, "https://raw.githubusercontent.com/JoshMatthew/PeewPeew/master/assets/sfx/win-sound.mp3")
 
   ctx.shadowColor = null
   ctx.shadowBlur = null
