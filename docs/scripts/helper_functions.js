@@ -131,4 +131,18 @@ class HelperFunctions {
     return from.addEventListener(event, handler)
   }
 
+  static playAudio(volume, resource) {
+    let newAudio = new Audio(resource)
+    newAudio.volume = volume
+    let playPromise = newAudio.play()
+
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+
+      }).catch(err => {
+
+      })
+    }
+  }
+
 }

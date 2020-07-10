@@ -101,9 +101,7 @@ function stopDead(interval) { // Function that stops the game when the player di
   showScore() // Shows the score
   gameOnToggler() // Turns off the game
 
-  let audio = new Audio("../assets/sfx/defeat-sound.mp3")
-  audio.volume = looseVolume
-  audio.play()
+  HelperFunctions.playAudio(looseVolume, "../assets/sfx/defeat-sound.mp3")
 
   ctx.shadowColor = null
   ctx.shadowBlur = null
@@ -123,9 +121,7 @@ function stopWin(interval) { // Function that stops the game when the player win
   showScore() // Shows the score
   gameOnToggler() // Turns off the game
 
-  let audio = new Audio("../assets/sfx/win-sound.mp3")
-  audio.volume = winVolume
-  audio.play()
+  HelperFunctions.playAudio(winVolume, "../assets/sfx/win-sound.mp3")
 
   ctx.shadowColor = null
   ctx.shadowBlur = null

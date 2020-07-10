@@ -91,15 +91,11 @@ class Player {
         blt.vector.dy = this.bulletDirection.dy // to the mouse pos
         this.bullets.push(blt) // Push the bullet object to bullets array
 
-        let audio = new Audio('../assets/sfx/player-gun.mp3')
-        audio.volume = this.gunVolume
-        audio.play()
+        HelperFunctions.playAudio(this.gunVolume, '../assets/sfx/player-gun.mp3')
 
         this.ammo--
       } else {
-        let audio = new Audio('../assets/sfx/no-ammo.mp3')
-        audio.volume = this.noAmmoVolume
-        audio.play()
+        HelperFunctions.playAudio(this.noAmmoVolume, '../assets/sfx/no-ammo.mp3')
       }
     }
   }
@@ -128,9 +124,7 @@ class Player {
     if (this.life > 0) {
       this.life -= damage
 
-      let audio = new Audio("../assets/sfx/player-hit.mp3")
-      audio.volume = this.hitVolume
-      audio.play()
+      HelperFunctions.playAudio(this.hitVolume, "../assets/sfx/player-hit.mp3")
     }
   }
 
@@ -215,9 +209,7 @@ class Player {
       const RELOAD = 82 // 82 is the keycode for 'r' key
 
       if (key === CHANGE_MODE) { // change the firing mode when 'q' key is pressed
-        let audio = new Audio("../assets/sfx/reload.mp3")
-        audio.volume = this.reloadVolume
-        audio.play()
+        HelperFunctions.playAudio(this.reloadVolume, "../assets/sfx/reload.mp3")
         this.autoFire = !this.autoFire
       }
 
@@ -225,9 +217,7 @@ class Player {
         if (!this.reloading) {
           if (this.clips > 0) {
             if (this.ammo !== this.AMMO_SIZE) {
-              let audio = new Audio("../assets/sfx/reload-gun.mp3")
-              audio.volume = this.reloadGunVolume
-              audio.play()
+              HelperFunctions.playAudio(this.reloadGunVolume, "../assets/sfx/reload-gun.mp3")
 
               setTimeout(() => {
                 this.reloading = !this.reloading
