@@ -10,5 +10,5 @@
     * Player can no longer have unlimited bullets (spend it wisely)
 
 #### Live Preview
-[click here](https://joshmatthew.github.io/PeewPeew/)
+[click here](https://joshmatthew.github.io/PeewPeew/)<br>
 If you have suggestions kindly email me at joshmatthewtalplacido@gmail.com
