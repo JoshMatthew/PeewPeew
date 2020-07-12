@@ -17,7 +17,7 @@ window.onload = function () {
 
   let userPreferences = window.localStorage
 
-  if (userPreferences.getItem('controls') === null) {
+  if (userPreferences.getItem('controls') === null || userPreferences.getItem('controls') === undefined) {
     userPreferences.setItem('controls', 'mouse')
     controls.value = userPreferences.getItem('controls')
   } else {
