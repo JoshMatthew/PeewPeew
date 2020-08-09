@@ -81,7 +81,7 @@ window.onload = function () {
     const points = window.localStorage.getItem('player_score')
     const acc_id = window.localStorage.getItem('acc_id')
 
-    postData('http://localhost:8080/peewpeew/points', { acc_id, points })
+    postData('https://hereumapi.herokuapp.com/peewpeew/points', { acc_id, points })
       .then(data => {
         window.alert("Points submitted!")
         exitBtn.click()
