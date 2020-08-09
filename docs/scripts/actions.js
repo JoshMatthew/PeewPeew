@@ -14,8 +14,14 @@ window.onload = function () {
   const controls = document.querySelector('#controls')
   const about = document.querySelector('.about')
   const aboutBtn = document.querySelector('#about-btn')
+  const claimHre = document.querySelector('#claim-hre')
 
   let userPreferences = window.localStorage
+
+  const params = new URLSearchParams(window.location.search) // gets the acc id of the metamask user
+  if (params.has('acc')) {
+    window.localStorage.setItem('acc_id', params.get('acc')) // sets the id to the localstorage
+  }
 
   if (userPreferences.getItem('controls') === null || userPreferences.getItem('controls') === undefined) {
     userPreferences.setItem('controls', 'mouse')
@@ -69,6 +75,36 @@ window.onload = function () {
     about.classList.toggle('hide')
     menu.classList.toggle('hide')
   })
+
+  claimHre.addEventListener('click', () => { // Claims the score and send it to the database
+    const points = window.localStorage.getItem('player_score')
+    const acc_id = window.localStorage.getItem('acc_id')
+
+    postData('http://localhost:8080/peewpeew/points', { acc_id, points })
+      .then(data => {
+        console.log(data); // JSON data parsed by `data.json()` call
+        window.alert("Points submitted!")
+        exitBtn.click()
+      });
+  })
+
+
+  async function postData(url = '', data = {}) { // Post data handler
+    const response = await fetch(url, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: 'same-origin', // include, *same-origin, omit
+      headers: {
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      redirect: 'follow', // manual, *follow, error
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+  }
 }
 
 // These functions are outside because we can't declare functions inside another function ;)

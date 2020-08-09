@@ -151,6 +151,7 @@ function showScore() { // Calculates and shows score to the screen
   if (player1.life > 0) {
     playerScore = (100 * player1.life - inGameTime) + player1.clips // The score varies to the amount of life left, minus the time he spent, plus the clips the player remained
   }
+  window.localStorage.setItem("player_score", playerScore) // sets the player score to the localstorage
   score.innerText = `Score: ${playerScore}`
 }
 
