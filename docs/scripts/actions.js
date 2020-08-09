@@ -77,12 +77,12 @@ window.onload = function () {
   })
 
   claimHre.addEventListener('click', () => { // Claims the score and send it to the database
+    window.alert("Wait for it to load.")
     const points = window.localStorage.getItem('player_score')
     const acc_id = window.localStorage.getItem('acc_id')
 
     postData('http://localhost:8080/peewpeew/points', { acc_id, points })
       .then(data => {
-        console.log(data); // JSON data parsed by `data.json()` call
         window.alert("Points submitted!")
         exitBtn.click()
       });
