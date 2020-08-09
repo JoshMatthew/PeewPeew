@@ -23,7 +23,7 @@ window.onload = function () {
     window.localStorage.setItem('acc_id', params.get('acc')) // sets the id to the localstorage
   }
 
-  if (userPreferences.getItem('controls') === null || userPreferences.getItem('controls') === undefined) {
+  if (userPreferences.getItem('controls') === null || userPreferences.getItem('controls') === undefined || userPreferences.getItem('controls') === '') {
     userPreferences.setItem('controls', 'mouse')
     controls.value = userPreferences.getItem('controls')
   } else {
