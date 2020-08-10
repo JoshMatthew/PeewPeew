@@ -83,7 +83,8 @@ window.onload = function () {
 
     axios.post('https://hereumapi.herokuapp.com/peewpeew/points_add', { acc_id, points })
       .then(res => {
-        console.log(res)
+        window.alert('Points sent!')
+        exitBtn.click()
       })
       .catch(err => {
         console.log(err)
