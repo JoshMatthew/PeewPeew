@@ -81,30 +81,14 @@ window.onload = function () {
     const points = window.localStorage.getItem('player_score')
     const acc_id = window.localStorage.getItem('acc_id')
 
-    postData('https://hereumapi.herokuapp.com/peewpeew/points', { acc_id, points })
-      .then(data => {
-        window.alert("Points submitted!")
-        exitBtn.click()
-      });
+    axios.post('https://hereumapi.herokuapp.com/peewpeew/points_add', { acc_id, points })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   })
-
-
-  async function postData(url = '', data = {}) { // Post data handler
-    const response = await fetch(url, {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      mode: 'cors', // no-cors, *cors, same-origin
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: 'same-origin', // include, *same-origin, omit
-      headers: {
-        'Content-Type': 'application/json'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: 'follow', // manual, *follow, error
-      referrerPolicy: 'origin', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(data) // body data type must match "Content-Type" header
-    });
-    return response.json(); // parses JSON response into native JavaScript objects
-  }
 }
 
 // These functions are outside because we can't declare functions inside another function ;)
