@@ -1,7 +1,7 @@
 ##### Changelog!! v1.0.2
 
 * ERC20 Token supplier!
-    * Added the functionality to send (HRE) to your metamask wallet currently in Ropsten Network. To get some HRE supply, kindly go to Hereum page and open PeewPeew from there. That's it for now!
+    * Added the functionality to send (HRE) to your metamask wallet currently in Ropsten Network. To get some HRE supply, kindly go to [Hereum](https://hereum.herokuapp.com/) page and open PeewPeew from there. That's it for now!
 
 
 ##### Changelog!! v1.0.1
