@@ -22,7 +22,7 @@ window.onload = function () {
   if (params.has('acc')) {
     window.localStorage.setItem('acc_id', params.get('acc')) // sets the id to the localstorage
   } else {
-    window.localStorage.setItem('acc_id', '0x2573F143d3674D995C339Af3682Fc4cc29eb7882') // hardcode it for now
+    window.localStorage.setItem('acc_id', 'none')
   }
 
   if (userPreferences.getItem('controls') === null || userPreferences.getItem('controls') === undefined || userPreferences.getItem('controls') === '') {
