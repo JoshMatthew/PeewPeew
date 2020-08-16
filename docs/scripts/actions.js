@@ -26,6 +26,7 @@ window.onload = function () {
   if (userPreferences.getItem('controls') === null || userPreferences.getItem('controls') === undefined || userPreferences.getItem('controls') === '') {
     userPreferences.setItem('controls', 'mouse')
     controls.value = userPreferences.getItem('controls')
+    window.location.reload()
   } else {
     controls.value = userPreferences.getItem('controls')
   }
@@ -92,7 +93,7 @@ window.onload = function () {
   })
 }
 
-// These functions are outside because we can't declare functions inside another function ;)
+// These functions are outside because we can't declare functions inside another function ;
 const restartModal = document.querySelector('.restart-modal')
 const gameDetails = document.querySelector('.game-details')
 
