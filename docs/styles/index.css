@@ -200,7 +200,7 @@ h1 {
   border-radius: 5px;
 }
 
-.restart-modal {
+.restart-modal, .loading-screen {
   position: absolute;
   top: 0;
   left: 0;
@@ -243,6 +243,64 @@ h1 {
   color: #fff;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.2rem;
+}
+
+.loading {
+  display: flex;
+  flex-direction: row;
+}
+
+.loading__letter {
+  font-size: 2rem;
+  font-weight: normal;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-family: monospace;
+  color: #fff;
+  animation-name: bounce;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+.loading__letter:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.loading__letter:nth-child(3) {
+  animation-delay: 0.2s;
+}
+.loading__letter:nth-child(4) {
+  animation-delay: 0.3s;
+}
+.loading__letter:nth-child(5) {
+  animation-delay: 0.4s;
+}
+.loading__letter:nth-child(6) {
+  animation-delay: 0.5s;
+}
+.loading__letter:nth-child(7) {
+  animation-delay: 0.6s;
+}
+.loading__letter:nth-child(8) {
+  animation-delay: 0.8s;
+}
+.loading__letter:nth-child(9) {
+  animation-delay: 1s;
+}
+.loading__letter:nth-child(10) {
+  animation-delay: 1.2s;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0px);
+  }
+  40% {
+    transform: translateY(-2rem);
+  }
+  80%,
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 #life-cntnr, #ammo-cntnr, #clips-cntnr {
