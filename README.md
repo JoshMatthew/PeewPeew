@@ -18,7 +18,7 @@
 ### Roadmap for the next big update! :dart:
 - [x] ~~Establish a server that will serve static files~~
 - [ ] Convert all existing code to TypeScript
-- [ ] Instead of using vanilla Javascript, I'll migrate to Pixi.js
+- [ ] Instead of using vanilla Javascript, I'll migrate to Phaser
 - [ ] Update the server for multiplayer support
 - [ ] Add a new gamemode "Duel" (1v1)
 - [ ] Revamp the UI
